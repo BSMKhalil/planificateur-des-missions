@@ -1,0 +1,131 @@
+<br>
+<div  class="mx-4">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">NBR de mission aujourd'hui</h5>
+          <p class="card-text">{{todaysCount}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">NBR de mission à venir</h5>
+          <p class="card-text">{{futureDaysCount}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <br>
+  <!-- Schedule -->
+  <div class="row">
+    <div class="col-md-8">
+    <ejs-schedule id='Schedule' #scheduleObj 
+      [currentView]="currentView" 
+      [selectedDate]="selectedDate" 
+      [eventSettings]="eventSettings">
+    </ejs-schedule>
+    </div>
+  
+    <!-- Grid -->
+    <div class="col-md-4 position">
+      <h4>Livreur</h4>
+      <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+        <ejs-grid id='Grid' #livreur 
+        [dataSource]='livreursData'  style="cursor: pointer;"
+        [allowSelection]="true" 
+        [allowRowDragAndDrop]="true" 
+        [editSettings]='editSettings'
+        [rowDropSettings]="srcDropOptions" 
+        (rowDrop)="onDragStopLivreur($event)" 
+        (rowDrag)="onRowDrag($event)">
+      <e-columns>
+        <e-column field='Id' isPrimaryKey='primaryKeyVal' headerText='ID' width='10' textAlign='Left'></e-column>
+        <e-column field='Name' headerText='Nom de livreur' width='25'></e-column>
+      </e-columns>
+   </ejs-grid>
+      </cdk-virtual-scroll-viewport>
+   
+  
+     <h4>Moto</h4>
+     <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+     <ejs-grid id='Grid' #moto 
+          [dataSource]='motoData' style="cursor: pointer;"
+          [allowSelection]="true" 
+          [allowRowDragAndDrop]="true" 
+          [editSettings]='editSettings'
+          [rowDropSettings]="srcDropOptions" 
+          (rowDrop)="onDragStopMoto($event)" 
+          (rowDrag)="onRowDrag($event)">
+        <e-columns>
+          <e-column field='Id' isPrimaryKey='primaryKeyVal' headerText='ID' width='10' textAlign='Left'></e-column>
+          <e-column field='Name' headerText='Moto' width='25'></e-column>
+        </e-columns>
+     </ejs-grid>
+    </cdk-virtual-scroll-viewport>
+  
+     <h4>Adresse</h4>
+     <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+     <ejs-grid id='Grid' #adresse 
+          [dataSource]='addresseData' style="cursor: pointer;"
+          [allowSelection]="true" 
+          [allowRowDragAndDrop]="true" 
+          [editSettings]='editSettings'
+          [rowDropSettings]="srcDropOptions" 
+          (rowDrop)="onDragStopAdresse($event)" 
+          (rowDrag)="onRowDrag($event)">
+        <e-columns>
+          <e-column field='Id' isPrimaryKey='primaryKeyVal' headerText='ID' width='10' textAlign='Left'></e-column>
+          <e-column field='Name' headerText='Adresse' width='25'></e-column>
+        </e-columns>
+     </ejs-grid>
+    </cdk-virtual-scroll-viewport>
+    </div>
+  </div>
+  <br>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID mission</th>
+          <th>Date de mission</th>
+          <th>Livreur</th>
+          <th>Adresse de livraison</th>
+          <th>Option</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+  
+      <tbody>
+        <tr *ngFor="let mission of missionsFormatted;let i=index">
+          <td>
+            {{mission.id}}
+          </td>
+          <td>
+            {{mission.dateDeMission | date: 'dd/MM/yyyy'}}
+          </td>
+          <td>
+            {{mission.name}}
+          </td>
+          <td>
+              {{mission.adresseMission}}
+          </td>
+          <td>
+            <button class="btn btn-primary">
+              Option
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-info" type="button" (click)="openDialog(mission)">
+              Details
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+  
